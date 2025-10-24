@@ -90,7 +90,7 @@ namespace _8BitdoSuperButton
             // 
             // SettingsForm
             // 
-            this.ClientSize = new System.Drawing.Size(384, 135);
+            this.ClientSize = new System.Drawing.Size(400, 150);
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.rightKeyComboBox);
             this.Controls.Add(this.rightKeyLabel);
@@ -101,7 +101,8 @@ namespace _8BitdoSuperButton
             this.Name = "SettingsForm";
             this.Text = "Settings";
             this.Icon = new System.Drawing.Icon("icon.ico");
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.Load += new System.EventHandler(this.SettingsForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
