@@ -86,5 +86,95 @@ namespace _8BitdoSuperButton.Properties
                 this["Enabled"] = value;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool LeftCtrl
+        {
+            get
+            {
+                return ((bool)(this["LeftCtrl"]));
+            }
+            set
+            {
+                this["LeftCtrl"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool LeftAlt
+        {
+            get
+            {
+                return ((bool)(this["LeftAlt"]));
+            }
+            set
+            {
+                this["LeftAlt"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool LeftShift
+        {
+            get
+            {
+                return ((bool)(this["LeftShift"]));
+            }
+            set
+            {
+                this["LeftShift"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool RightCtrl
+        {
+            get
+            {
+                return ((bool)(this["RightCtrl"]));
+            }
+            set
+            {
+                this["RightCtrl"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool RightAlt
+        {
+            get
+            {
+                return ((bool)(this["RightAlt"]));
+            }
+            set
+            {
+                this["RightAlt"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool RightShift
+        {
+            get
+            {
+                return ((bool)(this["RightShift"]));
+            }
+            set
+            {
+                this["RightShift"] = value;
+            }
+        }
     }
 }

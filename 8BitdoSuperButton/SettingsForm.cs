@@ -30,9 +30,21 @@ namespace _8BitdoSuperButton
             // Setting: AudioDevice (int)
             // Setting: LeftKey (System.Windows.Forms.Keys)
             // Setting: RightKey (System.Windows.Forms.Keys)
+            // Setting: LeftCtrl (bool)
+            // Setting: LeftAlt (bool)
+            // Setting: LeftShift (bool)
+            // Setting: RightCtrl (bool)
+            // Setting: RightAlt (bool)
+            // Setting: RightShift (bool)
             audioDeviceComboBox.SelectedIndex = Properties.Settings.Default.AudioDevice;
             leftKeyComboBox.SelectedItem = Properties.Settings.Default.LeftKey;
             rightKeyComboBox.SelectedItem = Properties.Settings.Default.RightKey;
+            leftCtrlCheckBox.Checked = Properties.Settings.Default.LeftCtrl;
+            leftAltCheckBox.Checked = Properties.Settings.Default.LeftAlt;
+            leftShiftCheckBox.Checked = Properties.Settings.Default.LeftShift;
+            rightCtrlCheckBox.Checked = Properties.Settings.Default.RightCtrl;
+            rightAltCheckBox.Checked = Properties.Settings.Default.RightAlt;
+            rightShiftCheckBox.Checked = Properties.Settings.Default.RightShift;
         }
 
         private void saveButton_Click(object sender, EventArgs e)
@@ -41,6 +53,12 @@ namespace _8BitdoSuperButton
              Properties.Settings.Default.AudioDevice = audioDeviceComboBox.SelectedIndex;
             Properties.Settings.Default.LeftKey = (Keys)leftKeyComboBox.SelectedItem;
             Properties.Settings.Default.RightKey = (Keys)rightKeyComboBox.SelectedItem;
+            Properties.Settings.Default.LeftCtrl = leftCtrlCheckBox.Checked;
+            Properties.Settings.Default.LeftAlt = leftAltCheckBox.Checked;
+            Properties.Settings.Default.LeftShift = leftShiftCheckBox.Checked;
+            Properties.Settings.Default.RightCtrl = rightCtrlCheckBox.Checked;
+            Properties.Settings.Default.RightAlt = rightAltCheckBox.Checked;
+            Properties.Settings.Default.RightShift = rightShiftCheckBox.Checked;
             Properties.Settings.Default.Save();
             this.Close();
         }

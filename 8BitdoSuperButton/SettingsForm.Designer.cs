@@ -22,6 +22,16 @@ namespace _8BitdoSuperButton
             this.audioDeviceLabel = new System.Windows.Forms.Label();
             this.leftKeyLabel = new System.Windows.Forms.Label();
             this.rightKeyLabel = new System.Windows.Forms.Label();
+            this.leftModifiersGroupBox = new System.Windows.Forms.GroupBox();
+            this.leftShiftCheckBox = new System.Windows.Forms.CheckBox();
+            this.leftAltCheckBox = new System.Windows.Forms.CheckBox();
+            this.leftCtrlCheckBox = new System.Windows.Forms.CheckBox();
+            this.rightModifiersGroupBox = new System.Windows.Forms.GroupBox();
+            this.rightShiftCheckBox = new System.Windows.Forms.CheckBox();
+            this.rightAltCheckBox = new System.Windows.Forms.CheckBox();
+            this.rightCtrlCheckBox = new System.Windows.Forms.CheckBox();
+            this.leftModifiersGroupBox.SuspendLayout();
+            this.rightModifiersGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // audioDeviceLabel
@@ -57,13 +67,13 @@ namespace _8BitdoSuperButton
             this.leftKeyComboBox.FormattingEnabled = true;
             this.leftKeyComboBox.Location = new System.Drawing.Point(116, 39);
             this.leftKeyComboBox.Name = "leftKeyComboBox";
-            this.leftKeyComboBox.Size = new System.Drawing.Size(256, 21);
+            this.leftKeyComboBox.Size = new System.Drawing.Size(134, 21);
             this.leftKeyComboBox.TabIndex = 3;
             // 
             // rightKeyLabel
             // 
             this.rightKeyLabel.AutoSize = true;
-            this.rightKeyLabel.Location = new System.Drawing.Point(12, 69);
+            this.rightKeyLabel.Location = new System.Drawing.Point(12, 96);
             this.rightKeyLabel.Name = "rightKeyLabel";
             this.rightKeyLabel.Size = new System.Drawing.Size(92, 13);
             this.rightKeyLabel.TabIndex = 4;
@@ -73,14 +83,14 @@ namespace _8BitdoSuperButton
             // 
             this.rightKeyComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.rightKeyComboBox.FormattingEnabled = true;
-            this.rightKeyComboBox.Location = new System.Drawing.Point(116, 66);
+            this.rightKeyComboBox.Location = new System.Drawing.Point(116, 93);
             this.rightKeyComboBox.Name = "rightKeyComboBox";
-            this.rightKeyComboBox.Size = new System.Drawing.Size(256, 21);
+            this.rightKeyComboBox.Size = new System.Drawing.Size(134, 21);
             this.rightKeyComboBox.TabIndex = 5;
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(15, 100);
+            this.saveButton.Location = new System.Drawing.Point(15, 150);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 23);
             this.saveButton.TabIndex = 6;
@@ -88,9 +98,95 @@ namespace _8BitdoSuperButton
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
+            // leftModifiersGroupBox
+            // 
+            this.leftModifiersGroupBox.Controls.Add(this.leftShiftCheckBox);
+            this.leftModifiersGroupBox.Controls.Add(this.leftAltCheckBox);
+            this.leftModifiersGroupBox.Controls.Add(this.leftCtrlCheckBox);
+            this.leftModifiersGroupBox.Location = new System.Drawing.Point(256, 39);
+            this.leftModifiersGroupBox.Name = "leftModifiersGroupBox";
+            this.leftModifiersGroupBox.Size = new System.Drawing.Size(116, 48);
+            this.leftModifiersGroupBox.TabIndex = 7;
+            this.leftModifiersGroupBox.TabStop = false;
+            this.leftModifiersGroupBox.Text = "Modifiers";
+            // 
+            // leftShiftCheckBox
+            // 
+            this.leftShiftCheckBox.AutoSize = true;
+            this.leftShiftCheckBox.Location = new System.Drawing.Point(60, 20);
+            this.leftShiftCheckBox.Name = "leftShiftCheckBox";
+            this.leftShiftCheckBox.Size = new System.Drawing.Size(47, 17);
+            this.leftShiftCheckBox.TabIndex = 2;
+            this.leftShiftCheckBox.Text = "Shift";
+            this.leftShiftCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // leftAltCheckBox
+            // 
+            this.leftAltCheckBox.AutoSize = true;
+            this.leftAltCheckBox.Location = new System.Drawing.Point(6, 43);
+            this.leftAltCheckBox.Name = "leftAltCheckBox";
+            this.leftAltCheckBox.Size = new System.Drawing.Size(38, 17);
+            this.leftAltCheckBox.TabIndex = 1;
+            this.leftAltCheckBox.Text = "Alt";
+            this.leftAltCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // leftCtrlCheckBox
+            // 
+            this.leftCtrlCheckBox.AutoSize = true;
+            this.leftCtrlCheckBox.Location = new System.Drawing.Point(6, 20);
+            this.leftCtrlCheckBox.Name = "leftCtrlCheckBox";
+            this.leftCtrlCheckBox.Size = new System.Drawing.Size(41, 17);
+            this.leftCtrlCheckBox.TabIndex = 0;
+            this.leftCtrlCheckBox.Text = "Ctrl";
+            this.leftCtrlCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // rightModifiersGroupBox
+            // 
+            this.rightModifiersGroupBox.Controls.Add(this.rightShiftCheckBox);
+            this.rightModifiersGroupBox.Controls.Add(this.rightAltCheckBox);
+            this.rightModifiersGroupBox.Controls.Add(this.rightCtrlCheckBox);
+            this.rightModifiersGroupBox.Location = new System.Drawing.Point(256, 93);
+            this.rightModifiersGroupBox.Name = "rightModifiersGroupBox";
+            this.rightModifiersGroupBox.Size = new System.Drawing.Size(116, 48);
+            this.rightModifiersGroupBox.TabIndex = 8;
+            this.rightModifiersGroupBox.TabStop = false;
+            this.rightModifiersGroupBox.Text = "Modifiers";
+            // 
+            // rightShiftCheckBox
+            // 
+            this.rightShiftCheckBox.AutoSize = true;
+            this.rightShiftCheckBox.Location = new System.Drawing.Point(60, 20);
+            this.rightShiftCheckBox.Name = "rightShiftCheckBox";
+            this.rightShiftCheckBox.Size = new System.Drawing.Size(47, 17);
+            this.rightShiftCheckBox.TabIndex = 2;
+            this.rightShiftCheckBox.Text = "Shift";
+            this.rightShiftCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // rightAltCheckBox
+            // 
+            this.rightAltCheckBox.AutoSize = true;
+            this.rightAltCheckBox.Location = new System.Drawing.Point(6, 43);
+            this.rightAltCheckBox.Name = "rightAltCheckBox";
+            this.rightAltCheckBox.Size = new System.Drawing.Size(38, 17);
+            this.rightAltCheckBox.TabIndex = 1;
+            this.rightAltCheckBox.Text = "Alt";
+            this.rightAltCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // rightCtrlCheckBox
+            // 
+            this.rightCtrlCheckBox.AutoSize = true;
+            this.rightCtrlCheckBox.Location = new System.Drawing.Point(6, 20);
+            this.rightCtrlCheckBox.Name = "rightCtrlCheckBox";
+            this.rightCtrlCheckBox.Size = new System.Drawing.Size(41, 17);
+            this.rightCtrlCheckBox.TabIndex = 0;
+            this.rightCtrlCheckBox.Text = "Ctrl";
+            this.rightCtrlCheckBox.UseVisualStyleBackColor = true;
+            // 
             // SettingsForm
             // 
-            this.ClientSize = new System.Drawing.Size(400, 150);
+            this.ClientSize = new System.Drawing.Size(400, 185);
+            this.Controls.Add(this.rightModifiersGroupBox);
+            this.Controls.Add(this.leftModifiersGroupBox);
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.rightKeyComboBox);
             this.Controls.Add(this.rightKeyLabel);
@@ -104,6 +200,10 @@ namespace _8BitdoSuperButton
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.Load += new System.EventHandler(this.SettingsForm_Load);
+            this.leftModifiersGroupBox.ResumeLayout(false);
+            this.leftModifiersGroupBox.PerformLayout();
+            this.rightModifiersGroupBox.ResumeLayout(false);
+            this.rightModifiersGroupBox.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
         }
@@ -115,5 +215,13 @@ namespace _8BitdoSuperButton
         private System.Windows.Forms.Label audioDeviceLabel;
         private System.Windows.Forms.Label leftKeyLabel;
         private System.Windows.Forms.Label rightKeyLabel;
+        private System.Windows.Forms.GroupBox leftModifiersGroupBox;
+        private System.Windows.Forms.CheckBox leftShiftCheckBox;
+        private System.Windows.Forms.CheckBox leftAltCheckBox;
+        private System.Windows.Forms.CheckBox leftCtrlCheckBox;
+        private System.Windows.Forms.GroupBox rightModifiersGroupBox;
+        private System.Windows.Forms.CheckBox rightShiftCheckBox;
+        private System.Windows.Forms.CheckBox rightAltCheckBox;
+        private System.Windows.Forms.CheckBox rightCtrlCheckBox;
     }
 }

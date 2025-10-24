@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -116,6 +117,12 @@ namespace _8BitdoSuperButton
         private int inputDeviceIndex = -1;
         private Keys leftKey;
         private Keys rightKey;
+        private bool leftCtrl;
+        private bool leftAlt;
+        private bool leftShift;
+        private bool rightCtrl;
+        private bool rightAlt;
+        private bool rightShift;
 
         private bool isLeftPressed = false;
         private bool isRightPressed = false;
@@ -125,6 +132,12 @@ namespace _8BitdoSuperButton
             inputDeviceIndex = Properties.Settings.Default.AudioDevice;
             leftKey = Properties.Settings.Default.LeftKey;
             rightKey = Properties.Settings.Default.RightKey;
+            leftCtrl = Properties.Settings.Default.LeftCtrl;
+            leftAlt = Properties.Settings.Default.LeftAlt;
+            leftShift = Properties.Settings.Default.LeftShift;
+            rightCtrl = Properties.Settings.Default.RightCtrl;
+            rightAlt = Properties.Settings.Default.RightAlt;
+            rightShift = Properties.Settings.Default.RightShift;
         }
 
         public void Start()
@@ -158,14 +171,24 @@ namespace _8BitdoSuperButton
                 {
                     Console.WriteLine("Left Pressed Down");
                     isLeftPressed = true;
-                    KeySimulator.SendKeyPress(leftKey);
+                    var keys = new List<Keys>();
+                    if (leftCtrl) keys.Add(Keys.ControlKey);
+                    if (leftAlt) keys.Add(Keys.Menu);
+                    if (leftShift) keys.Add(Keys.ShiftKey);
+                    keys.Add(leftKey);
+                    KeySimulator.SendKeyPress(keys.ToArray());
 
                 }
                 else if (leftSample > 20000 && isLeftPressed)
                 {
                     Console.WriteLine("Left Released");
                     isLeftPressed = false;
-                    KeySimulator.SendKeyRelease(leftKey);
+                    var keys = new List<Keys>();
+                    if (leftCtrl) keys.Add(Keys.ControlKey);
+                    if (leftAlt) keys.Add(Keys.Menu);
+                    if (leftShift) keys.Add(Keys.ShiftKey);
+                    keys.Add(leftKey);
+                    KeySimulator.SendKeyRelease(keys.ToArray());
                 }
 
                 // Right Channel
@@ -174,17 +197,25 @@ namespace _8BitdoSuperButton
                 {
                     Console.WriteLine("Right Pressed Down");
                     isRightPressed = true;
-                    KeySimulator.SendKeyPress(rightKey);
+                    var keys = new List<Keys>();
+                    if (rightCtrl) keys.Add(Keys.ControlKey);
+                    if (rightAlt) keys.Add(Keys.Menu);
+                    if (rightShift) keys.Add(Keys.ShiftKey);
+                    keys.Add(rightKey);
+                    KeySimulator.SendKeyPress(keys.ToArray());
 
                 }
                 else if (rightSample > 20000 && isRightPressed)
                 {
                     Console.WriteLine("Right Released");
                     isRightPressed = false;
-                    KeySimulator.SendKeyRelease(rightKey);
+                    var keys = new List<Keys>();
+                    if (rightCtrl) keys.Add(Keys.ControlKey);
+                    if (rightAlt) keys.Add(Keys.Menu);
+                    if (rightShift) keys.Add(Keys.ShiftKey);
+                    keys.Add(rightKey);
+                    KeySimulator.SendKeyRelease(keys.ToArray());
                 }
-
-
             }
         }
     }
@@ -247,51 +278,55 @@ namespace _8BitdoSuperButton
         private const uint INPUT_KEYBOARD = 1;
         private const uint KEYEVENTF_KEYUP = 0x0002;
 
-        public static void SendKeyPress(Keys key)
+        public static void SendKeyPress(params Keys[] keys)
         {
-            INPUT[] inputs = new INPUT[]
+            if (keys == null || keys.Length == 0) return;
+
+            INPUT[] inputs = new INPUT[keys.Length];
+            for (int i = 0; i < keys.Length; i++)
             {
-                new INPUT
+                inputs[i] = new INPUT
                 {
                     type = INPUT_KEYBOARD,
                     u = new InputUnion
                     {
                         ki = new KEYBDINPUT
                         {
-                            wVk = (ushort)key,
+                            wVk = (ushort)keys[i],
                             wScan = 0,
                             dwFlags = 0,
                             time = 0,
                             dwExtraInfo = GetMessageExtraInfo(),
                         }
                     }
-                }
-            };
-
+                };
+            }
             SendInput((uint)inputs.Length, inputs, Marshal.SizeOf(typeof(INPUT)));
         }
 
-        public static void SendKeyRelease(Keys key)
+        public static void SendKeyRelease(params Keys[] keys)
         {
-            INPUT[] inputs = new INPUT[]
+            if (keys == null || keys.Length == 0) return;
+
+            INPUT[] inputs = new INPUT[keys.Length];
+            for (int i = 0; i < keys.Length; i++)
             {
-                new INPUT
+                inputs[i] = new INPUT
                 {
                     type = INPUT_KEYBOARD,
                     u = new InputUnion
                     {
                         ki = new KEYBDINPUT
                         {
-                            wVk = (ushort)key,
+                            wVk = (ushort)keys[i],
                             wScan = 0,
                             dwFlags = KEYEVENTF_KEYUP,
                             time = 0,
                             dwExtraInfo = GetMessageExtraInfo(),
                         }
                     }
-                }
-            };
-
+                };
+            }
             SendInput((uint)inputs.Length, inputs, Marshal.SizeOf(typeof(INPUT)));
         }
     }
