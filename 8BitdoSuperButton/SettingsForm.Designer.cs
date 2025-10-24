@@ -100,6 +100,8 @@ namespace _8BitdoSuperButton
             this.Controls.Add(this.audioDeviceLabel);
             this.Name = "SettingsForm";
             this.Text = "Settings";
+            this.Icon = new System.Drawing.Icon("icon.ico");
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.Load += new System.EventHandler(this.SettingsForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

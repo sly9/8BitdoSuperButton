@@ -13,10 +13,19 @@ namespace _8BitdoSuperButton
         [STAThread]
         static void Main()
         {
+            // Enable DPI awareness
+            if (Environment.OSVersion.Version.Major >= 6)
+            {
+                SetProcessDPIAware();
+            }
+            
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new TrayApplicationContext());
         }
+
+        [DllImport("user32.dll")]
+        private static extern bool SetProcessDPIAware();
     }
 
     public class TrayApplicationContext : ApplicationContext
@@ -32,9 +41,22 @@ namespace _8BitdoSuperButton
             enableDisableMenuItem = new MenuItem("Enable", OnToggleMonitoring);
             enableDisableMenuItem.Checked = Properties.Settings.Default.Enabled;
 
+            // Create DPI-aware tray icon
+            Icon trayIconIcon;
+            try
+            {
+                // Try to load a high-resolution icon for better DPI support
+                trayIconIcon = new Icon("icon.ico", new Size(32, 32));
+            }
+            catch
+            {
+                // Fallback to default icon loading
+                trayIconIcon = new Icon("icon.ico");
+            }
+
             trayIcon = new NotifyIcon()
             {
-                Icon = new Icon("icon.ico"),
+                Icon = trayIconIcon,
                 ContextMenu = new ContextMenu(new MenuItem[] {
                     enableDisableMenuItem,
                     new MenuItem("Settings", OnSettings),
