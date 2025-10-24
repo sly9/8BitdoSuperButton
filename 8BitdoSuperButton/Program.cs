@@ -1,6 +1,7 @@
 using System;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using NAudio.CoreAudioApi;
 using NAudio.Wave;
@@ -36,6 +37,7 @@ namespace _8BitdoSuperButton
                 Icon = SystemIcons.Application,
                 ContextMenu = new ContextMenu(new MenuItem[] {
                     enableDisableMenuItem,
+                    new MenuItem("Settings", OnSettings),
                     new MenuItem("Exit", OnExit)
                 }),
                 Visible = true,
@@ -56,6 +58,21 @@ namespace _8BitdoSuperButton
             }
         }
 
+        private void OnSettings(object sender, EventArgs e)
+        {
+            using (var settingsForm = new SettingsForm())
+            {
+                settingsForm.ShowDialog();
+            }
+            // After settings are saved, we need to re-initialize the audio monitor
+            audioMonitor.Stop();
+            audioMonitor = new AudioMonitor();
+            if(enableDisableMenuItem.Checked)
+            {
+                audioMonitor.Start();
+            }
+        }
+
         private void OnExit(object sender, EventArgs e)
         {
             trayIcon.Visible = false;
@@ -68,33 +85,30 @@ namespace _8BitdoSuperButton
     {
         private WaveInEvent waveIn;
         private int inputDeviceIndex = -1;
+        private Keys leftKey;
+        private Keys rightKey;
 
-        private bool isLeftDown = false;
-        private bool isRightDown = false;
+        private bool isLeftPressed = false;
+        private bool isRightPressed = false;
 
         public AudioMonitor()
         {
-            var enumerator = new MMDeviceEnumerator();
-            var devices = enumerator.EnumerateAudioEndPoints(DataFlow.Capture, DeviceState.Active);
-            for (int i = 0; i < WaveIn.DeviceCount; i++)
-            {
-                var caps = WaveIn.GetCapabilities(i);
-                if (caps.ProductName.ToLower().Contains("line") && !caps.ProductName.ToLower().Contains("mic"))
-                {
-                    inputDeviceIndex = i;
-                    break;
-                }
-            }
+            // TODO: Create and use settings in the project's Properties.Settings.settings file
+            // inputDeviceIndex = Properties.Settings.Default.AudioDevice;
+            // leftKey = Properties.Settings.Default.LeftKey;
+            // rightKey = Properties.Settings.Default.RightKey;
 
-            if (inputDeviceIndex == -1)
-            {
-                Console.WriteLine("No suitable audio input device found.");
-            }
+            // Using hardcoded values for now
+            // inputDeviceIndex = 0; // First audio device
+            leftKey = Keys.F23;
+            rightKey = Keys.F24;
         }
 
         public void Start()
         {
-            if (inputDeviceIndex == -1) return;
+            inputDeviceIndex = Properties.Settings.Default.AudioDevice;
+            leftKey = Properties.Settings.Default.LeftKey;
+            rightKey = Properties.Settings.Default.RightKey;
 
             waveIn = new WaveInEvent
             {
@@ -116,33 +130,150 @@ namespace _8BitdoSuperButton
         {
             for (int i = 0; i < args.BytesRecorded; i += 4)
             {
-                // 16-bit stereo has 4 bytes per sample (2 for left, 2 for right)
                 short leftSample = (short)(args.Buffer[i] | (args.Buffer[i + 1] << 8));
                 short rightSample = (short)(args.Buffer[i + 2] | (args.Buffer[i + 3] << 8));
 
 
-                // Simple peak detection for left button
-                if (leftSample < -20000 && !isLeftDown) {
+                // Left channel
+                if (leftSample < -20000 && !isLeftPressed)
+                {
                     Console.WriteLine("Left Pressed Down");
-                    isLeftDown = true;
-                } else if (leftSample > 20000 && isLeftDown)
+                    isLeftPressed = true;
+                    KeySimulator.SendKeyPress(leftKey);
+
+                }
+                else if (leftSample > 20000 && isLeftPressed)
                 {
                     Console.WriteLine("Left Released");
-                    isLeftDown = false;
+                    isLeftPressed = false;
+                    KeySimulator.SendKeyRelease(leftKey);
                 }
 
-                // Simple peak detection for right button
-                if (rightSample < -20000 && !isRightDown)
+                // Right Channel
+
+                if (rightSample < -20000 && !isRightPressed)
                 {
                     Console.WriteLine("Right Pressed Down");
-                    isRightDown = true;
+                    isRightPressed = true;
+                    KeySimulator.SendKeyPress(rightKey);
+
                 }
-                else if (rightSample > 20000 && isRightDown)
+                else if (rightSample > 20000 && isRightPressed)
                 {
                     Console.WriteLine("Right Released");
-                    isRightDown = false;
+                    isRightPressed = false;
+                    KeySimulator.SendKeyRelease(rightKey);
                 }
+
+
             }
+        }
+    }
+
+    public static class KeySimulator
+    {
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern uint SendInput(uint nInputs, INPUT[] pInputs, int cbSize);
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetMessageExtraInfo();
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct INPUT
+        {
+            public uint type;
+            public InputUnion u;
+        }
+
+        [StructLayout(LayoutKind.Explicit)]
+        public struct InputUnion
+        {
+            [FieldOffset(0)]
+            public MOUSEINPUT mi;
+            [FieldOffset(0)]
+            public KEYBDINPUT ki;
+            [FieldOffset(0)]
+            public HARDWAREINPUT hi;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct MOUSEINPUT
+        {
+            public int dx;
+            public int dy;
+            public uint mouseData;
+            public uint dwFlags;
+            public uint time;
+            public IntPtr dwExtraInfo;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct KEYBDINPUT
+        {
+            public ushort wVk;
+            public ushort wScan;
+            public uint dwFlags;
+            public uint time;
+            public IntPtr dwExtraInfo;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct HARDWAREINPUT
+        {
+            public uint uMsg;
+            public ushort wParamL;
+            public ushort wParamH;
+        }
+
+        private const uint INPUT_KEYBOARD = 1;
+        private const uint KEYEVENTF_KEYUP = 0x0002;
+
+        public static void SendKeyPress(Keys key)
+        {
+            INPUT[] inputs = new INPUT[]
+            {
+                new INPUT
+                {
+                    type = INPUT_KEYBOARD,
+                    u = new InputUnion
+                    {
+                        ki = new KEYBDINPUT
+                        {
+                            wVk = (ushort)key,
+                            wScan = 0,
+                            dwFlags = 0,
+                            time = 0,
+                            dwExtraInfo = GetMessageExtraInfo(),
+                        }
+                    }
+                }
+            };
+
+            SendInput((uint)inputs.Length, inputs, Marshal.SizeOf(typeof(INPUT)));
+        }
+
+        public static void SendKeyRelease(Keys key)
+        {
+            INPUT[] inputs = new INPUT[]
+            {
+                new INPUT
+                {
+                    type = INPUT_KEYBOARD,
+                    u = new InputUnion
+                    {
+                        ki = new KEYBDINPUT
+                        {
+                            wVk = (ushort)key,
+                            wScan = 0,
+                            dwFlags = KEYEVENTF_KEYUP,
+                            time = 0,
+                            dwExtraInfo = GetMessageExtraInfo(),
+                        }
+                    }
+                }
+            };
+
+            SendInput((uint)inputs.Length, inputs, Marshal.SizeOf(typeof(INPUT)));
         }
     }
 }
