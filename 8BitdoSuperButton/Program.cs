@@ -34,7 +34,7 @@ namespace _8BitdoSuperButton
 
             trayIcon = new NotifyIcon()
             {
-                Icon = SystemIcons.Application,
+                Icon = new Icon("icon.ico"),
                 ContextMenu = new ContextMenu(new MenuItem[] {
                     enableDisableMenuItem,
                     new MenuItem("Settings", OnSettings),
@@ -43,6 +43,11 @@ namespace _8BitdoSuperButton
                 Visible = true,
                 Text = "8BitdoSuperButton"
             };
+
+            if (Properties.Settings.Default.Enabled)
+            {
+                audioMonitor.Start();
+            }
         }
 
         private void OnToggleMonitoring(object sender, EventArgs e)
