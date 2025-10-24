@@ -90,7 +90,8 @@ namespace _8BitdoSuperButton
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(15, 150);
+            // moved down to sit below the larger modifier groups
+            this.saveButton.Location = new System.Drawing.Point(15, 200);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 23);
             this.saveButton.TabIndex = 6;
@@ -105,7 +106,8 @@ namespace _8BitdoSuperButton
             this.leftModifiersGroupBox.Controls.Add(this.leftCtrlCheckBox);
             this.leftModifiersGroupBox.Location = new System.Drawing.Point(256, 39);
             this.leftModifiersGroupBox.Name = "leftModifiersGroupBox";
-            this.leftModifiersGroupBox.Size = new System.Drawing.Size(116, 48);
+            // Increased width so checkboxes have more room and don't overlap
+            this.leftModifiersGroupBox.Size = new System.Drawing.Size(220, 56);
             this.leftModifiersGroupBox.TabIndex = 7;
             this.leftModifiersGroupBox.TabStop = false;
             this.leftModifiersGroupBox.Text = "Modifiers";
@@ -113,7 +115,8 @@ namespace _8BitdoSuperButton
             // leftShiftCheckBox
             // 
             this.leftShiftCheckBox.AutoSize = true;
-            this.leftShiftCheckBox.Location = new System.Drawing.Point(60, 20);
+            // place modifiers in a single row with spacing for easier clicking
+            this.leftShiftCheckBox.Location = new System.Drawing.Point(152, 22);
             this.leftShiftCheckBox.Name = "leftShiftCheckBox";
             this.leftShiftCheckBox.Size = new System.Drawing.Size(47, 17);
             this.leftShiftCheckBox.TabIndex = 2;
@@ -123,7 +126,7 @@ namespace _8BitdoSuperButton
             // leftAltCheckBox
             // 
             this.leftAltCheckBox.AutoSize = true;
-            this.leftAltCheckBox.Location = new System.Drawing.Point(6, 43);
+            this.leftAltCheckBox.Location = new System.Drawing.Point(80, 22);
             this.leftAltCheckBox.Name = "leftAltCheckBox";
             this.leftAltCheckBox.Size = new System.Drawing.Size(38, 17);
             this.leftAltCheckBox.TabIndex = 1;
@@ -133,7 +136,7 @@ namespace _8BitdoSuperButton
             // leftCtrlCheckBox
             // 
             this.leftCtrlCheckBox.AutoSize = true;
-            this.leftCtrlCheckBox.Location = new System.Drawing.Point(6, 20);
+            this.leftCtrlCheckBox.Location = new System.Drawing.Point(12, 22);
             this.leftCtrlCheckBox.Name = "leftCtrlCheckBox";
             this.leftCtrlCheckBox.Size = new System.Drawing.Size(41, 17);
             this.leftCtrlCheckBox.TabIndex = 0;
@@ -147,7 +150,8 @@ namespace _8BitdoSuperButton
             this.rightModifiersGroupBox.Controls.Add(this.rightCtrlCheckBox);
             this.rightModifiersGroupBox.Location = new System.Drawing.Point(256, 93);
             this.rightModifiersGroupBox.Name = "rightModifiersGroupBox";
-            this.rightModifiersGroupBox.Size = new System.Drawing.Size(116, 48);
+            // match the left group box size and layout
+            this.rightModifiersGroupBox.Size = new System.Drawing.Size(220, 56);
             this.rightModifiersGroupBox.TabIndex = 8;
             this.rightModifiersGroupBox.TabStop = false;
             this.rightModifiersGroupBox.Text = "Modifiers";
@@ -155,7 +159,7 @@ namespace _8BitdoSuperButton
             // rightShiftCheckBox
             // 
             this.rightShiftCheckBox.AutoSize = true;
-            this.rightShiftCheckBox.Location = new System.Drawing.Point(60, 20);
+            this.rightShiftCheckBox.Location = new System.Drawing.Point(152, 22);
             this.rightShiftCheckBox.Name = "rightShiftCheckBox";
             this.rightShiftCheckBox.Size = new System.Drawing.Size(47, 17);
             this.rightShiftCheckBox.TabIndex = 2;
@@ -165,7 +169,7 @@ namespace _8BitdoSuperButton
             // rightAltCheckBox
             // 
             this.rightAltCheckBox.AutoSize = true;
-            this.rightAltCheckBox.Location = new System.Drawing.Point(6, 43);
+            this.rightAltCheckBox.Location = new System.Drawing.Point(80, 22);
             this.rightAltCheckBox.Name = "rightAltCheckBox";
             this.rightAltCheckBox.Size = new System.Drawing.Size(38, 17);
             this.rightAltCheckBox.TabIndex = 1;
@@ -175,7 +179,7 @@ namespace _8BitdoSuperButton
             // rightCtrlCheckBox
             // 
             this.rightCtrlCheckBox.AutoSize = true;
-            this.rightCtrlCheckBox.Location = new System.Drawing.Point(6, 20);
+            this.rightCtrlCheckBox.Location = new System.Drawing.Point(12, 22);
             this.rightCtrlCheckBox.Name = "rightCtrlCheckBox";
             this.rightCtrlCheckBox.Size = new System.Drawing.Size(41, 17);
             this.rightCtrlCheckBox.TabIndex = 0;
@@ -184,7 +188,11 @@ namespace _8BitdoSuperButton
             // 
             // SettingsForm
             // 
-            this.ClientSize = new System.Drawing.Size(400, 185);
+            // increased height so the modifier groups and Save button fit comfortably
+            this.ClientSize = new System.Drawing.Size(500, 245);
+            // make the form non-resizable
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
             this.Controls.Add(this.rightModifiersGroupBox);
             this.Controls.Add(this.leftModifiersGroupBox);
             this.Controls.Add(this.saveButton);
