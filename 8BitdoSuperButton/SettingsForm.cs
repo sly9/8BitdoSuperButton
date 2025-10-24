@@ -26,13 +26,13 @@ namespace _8BitdoSuperButton
             leftKeyComboBox.DataSource = keyValues.ToList();
             rightKeyComboBox.DataSource = keyValues.ToList();
 
-            // TODO: Create and use settings in the project's Properties.Settings.settings file
+            // Create and use settings in the project's Properties.Settings.settings file
             // Setting: AudioDevice (int)
             // Setting: LeftKey (System.Windows.Forms.Keys)
             // Setting: RightKey (System.Windows.Forms.Keys)
-            // audioDeviceComboBox.SelectedIndex = Properties.Settings.Default.AudioDevice;
-            // leftKeyComboBox.SelectedItem = Properties.Settings.Default.LeftKey;
-            // rightKeyComboBox.SelectedItem = Properties.Settings.Default.RightKey;
+            audioDeviceComboBox.SelectedIndex = Properties.Settings.Default.AudioDevice;
+            leftKeyComboBox.SelectedItem = Properties.Settings.Default.LeftKey;
+            rightKeyComboBox.SelectedItem = Properties.Settings.Default.RightKey;
         }
 
         private void saveButton_Click(object sender, EventArgs e)

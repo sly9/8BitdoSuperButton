@@ -30,7 +30,7 @@ namespace _8BitdoSuperButton
             audioMonitor = new AudioMonitor();
 
             enableDisableMenuItem = new MenuItem("Enable", OnToggleMonitoring);
-            enableDisableMenuItem.Checked = false;
+            enableDisableMenuItem.Checked = Properties.Settings.Default.Enabled;
 
             trayIcon = new NotifyIcon()
             {
@@ -48,6 +48,8 @@ namespace _8BitdoSuperButton
         private void OnToggleMonitoring(object sender, EventArgs e)
         {
             enableDisableMenuItem.Checked = !enableDisableMenuItem.Checked;
+            Properties.Settings.Default.Enabled = enableDisableMenuItem.Checked;
+            Properties.Settings.Default.Save();
             if (enableDisableMenuItem.Checked)
             {
                 audioMonitor.Start();
@@ -93,23 +95,13 @@ namespace _8BitdoSuperButton
 
         public AudioMonitor()
         {
-            // TODO: Create and use settings in the project's Properties.Settings.settings file
-            // inputDeviceIndex = Properties.Settings.Default.AudioDevice;
-            // leftKey = Properties.Settings.Default.LeftKey;
-            // rightKey = Properties.Settings.Default.RightKey;
-
-            // Using hardcoded values for now
-            // inputDeviceIndex = 0; // First audio device
-            leftKey = Keys.F23;
-            rightKey = Keys.F24;
+            inputDeviceIndex = Properties.Settings.Default.AudioDevice;
+            leftKey = Properties.Settings.Default.LeftKey;
+            rightKey = Properties.Settings.Default.RightKey;
         }
 
         public void Start()
         {
-            inputDeviceIndex = Properties.Settings.Default.AudioDevice;
-            leftKey = Properties.Settings.Default.LeftKey;
-            rightKey = Properties.Settings.Default.RightKey;
-
             waveIn = new WaveInEvent
             {
                 DeviceNumber = inputDeviceIndex,

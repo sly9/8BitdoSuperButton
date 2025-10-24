@@ -26,5 +26,65 @@ namespace _8BitdoSuperButton.Properties
                 return defaultInstance;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int AudioDevice
+        {
+            get
+            {
+                return ((int)(this["AudioDevice"]));
+            }
+            set
+            {
+                this["AudioDevice"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("F23")]
+        public global::System.Windows.Forms.Keys LeftKey
+        {
+            get
+            {
+                return ((global::System.Windows.Forms.Keys)(this["LeftKey"]));
+            }
+            set
+            {
+                this["LeftKey"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("F24")]
+        public global::System.Windows.Forms.Keys RightKey
+        {
+            get
+            {
+                return ((global::System.Windows.Forms.Keys)(this["RightKey"]));
+            }
+            set
+            {
+                this["RightKey"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Enabled
+        {
+            get
+            {
+                return ((bool)(this["Enabled"]));
+            }
+            set
+            {
+                this["Enabled"] = value;
+            }
+        }
     }
 }
