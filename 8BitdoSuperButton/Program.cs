@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using Microsoft.Win32;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using NAudio.CoreAudioApi;
@@ -33,6 +35,7 @@ namespace _8BitdoSuperButton
     {
         private NotifyIcon trayIcon;
         private MenuItem enableDisableMenuItem;
+        private MenuItem startWithWindowsMenuItem;
         private AudioMonitor audioMonitor;
 
         public TrayApplicationContext()
@@ -41,6 +44,9 @@ namespace _8BitdoSuperButton
 
             enableDisableMenuItem = new MenuItem("Enable", OnToggleMonitoring);
             enableDisableMenuItem.Checked = Properties.Settings.Default.Enabled;
+
+            startWithWindowsMenuItem = new MenuItem("Start with Windows", OnStartWithWindows);
+            startWithWindowsMenuItem.Checked = IsStartupEnabled();
 
             // Create DPI-aware tray icon
             Icon trayIconIcon;
@@ -60,6 +66,7 @@ namespace _8BitdoSuperButton
                 Icon = trayIconIcon,
                 ContextMenu = new ContextMenu(new MenuItem[] {
                     enableDisableMenuItem,
+                    startWithWindowsMenuItem,
                     new MenuItem("Settings", OnSettings),
                     new MenuItem("Exit", OnExit)
                 }),
@@ -85,6 +92,35 @@ namespace _8BitdoSuperButton
             else
             {
                 audioMonitor.Stop();
+            }
+        }
+
+        private void OnStartWithWindows(object sender, EventArgs e)
+        {
+            startWithWindowsMenuItem.Checked = !startWithWindowsMenuItem.Checked;
+            SetStartup(startWithWindowsMenuItem.Checked);
+        }
+
+        private bool IsStartupEnabled()
+        {
+            using (RegistryKey rk = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", false))
+            {
+                return rk.GetValue(Application.ProductName) != null;
+            }
+        }
+
+        private void SetStartup(bool isStartupEnabled)
+        {
+            using (RegistryKey rk = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true))
+            {
+                if (isStartupEnabled)
+                {
+                    rk.SetValue(Application.ProductName, Application.ExecutablePath);
+                }
+                else
+                {
+                    rk.DeleteValue(Application.ProductName, false);
+                }
             }
         }
 
