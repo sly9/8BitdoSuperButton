@@ -36,7 +36,14 @@ namespace _8BitdoSuperButton
             // Setting: RightCtrl (bool)
             // Setting: RightAlt (bool)
             // Setting: RightShift (bool)
-            audioDeviceComboBox.SelectedIndex = Properties.Settings.Default.AudioDevice;
+            if (Properties.Settings.Default.AudioDevice >= 0 && Properties.Settings.Default.AudioDevice < audioDeviceComboBox.Items.Count)
+            {
+                audioDeviceComboBox.SelectedIndex = Properties.Settings.Default.AudioDevice;
+            }
+            else if (audioDeviceComboBox.Items.Count > 0)
+            {
+                audioDeviceComboBox.SelectedIndex = 0;
+            }
             leftKeyComboBox.SelectedItem = Properties.Settings.Default.LeftKey;
             rightKeyComboBox.SelectedItem = Properties.Settings.Default.RightKey;
             leftCtrlCheckBox.Checked = Properties.Settings.Default.LeftCtrl;

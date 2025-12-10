@@ -76,7 +76,17 @@ namespace _8BitdoSuperButton
 
             if (Properties.Settings.Default.Enabled)
             {
-                audioMonitor.Start();
+                try
+                {
+                    audioMonitor.Start();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Failed to start audio monitoring: {ex.Message}\n\nMonitoring has been disabled.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Properties.Settings.Default.Enabled = false;
+                    Properties.Settings.Default.Save();
+                    enableDisableMenuItem.Checked = false;
+                }
             }
         }
 
@@ -87,7 +97,17 @@ namespace _8BitdoSuperButton
             Properties.Settings.Default.Save();
             if (enableDisableMenuItem.Checked)
             {
-                audioMonitor.Start();
+                try
+                {
+                    audioMonitor.Start();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Failed to start audio monitoring: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    enableDisableMenuItem.Checked = false;
+                    Properties.Settings.Default.Enabled = false;
+                    Properties.Settings.Default.Save();
+                }
             }
             else
             {
@@ -135,7 +155,17 @@ namespace _8BitdoSuperButton
             audioMonitor = new AudioMonitor();
             if(enableDisableMenuItem.Checked)
             {
-                audioMonitor.Start();
+                try
+                {
+                    audioMonitor.Start();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Failed to restart audio monitoring: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    enableDisableMenuItem.Checked = false;
+                    Properties.Settings.Default.Enabled = false;
+                    Properties.Settings.Default.Save();
+                }
             }
         }
 
